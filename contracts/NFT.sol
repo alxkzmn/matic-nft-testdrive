@@ -11,32 +11,17 @@ contract MyNFT is ERC721, Ownable {
 
     constructor() ERC721("MyNFT", "MNFT") {}
 
-    function _setTokenURI(uint256 tokenId, string memory _tokenURI)
-        internal
-        virtual
-    {
+    function _setTokenURI(uint256 tokenId, string memory _tokenURI) internal virtual {
         _tokenURIs[tokenId] = _tokenURI;
     }
 
-    function tokenURI(uint256 tokenId)
-        public
-        view
-        virtual
-        override
-        returns (string memory)
-    {
-        require(
-            _exists(tokenId),
-            "ERC721Metadata: URI query for nonexistent token"
-        );
+    function tokenURI(uint256 tokenId) public view virtual override returns (string memory) {
+        require(_exists(tokenId), "ERC721Metadata: URI query for nonexistent token");
         string memory _tokenURI = _tokenURIs[tokenId];
         return _tokenURI;
     }
 
-    function mint(address recipient, string memory uri)
-        public
-        returns (uint256)
-    {
+    function mint(address recipient, string memory uri) public returns (uint256) {
         _tokenIds.increment();
         uint256 newItemId = _tokenIds.current();
         _mint(recipient, newItemId);
